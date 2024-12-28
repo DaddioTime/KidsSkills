@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeLord</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .clock { font-size: 3rem; margin: 20px; }
+        .buttons button { margin: 5px; padding: 10px 20px; font-size: 1rem; }
+    </style>
+</head>
+<body>
+    <h1>Uhrzeit-Detektiv</h1>
+    <p>Welche Uhrzeit wird hier angezeigt?</p>
+    <canvas id="clockCanvas" width="200" height="200" style="border:1px solid #000000;"></canvas>
+    <div class="buttons" id="options"></div>
+    <p id="feedback"></p>
+
+    <script>
+        function drawClock(hour, minute) {
+            const canvas = document.getElementById('clockCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw clock face
+            ctx.beginPath();
+            ctx.arc(100, 100, 90, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            // Draw hour numbers
+            for (let i = 1; i <= 12; i++) {
+                const angle = (i * Math.PI) / 6;
+                const x = 100 + Math.sin(angle) * 75;
+                const y = 100 - Math.cos(angle) * 75;
+                ctx.fillText(i, x - 5, y + 5);
+            }
+
+            // Draw hour hand
+            const hourAngle = ((hour % 12) + minute / 60) * Math.PI / 6;
+            ctx.beginPath();
+            ctx.moveTo(100, 100);
+            ctx.lineTo(100 + Math.sin(hourAngle) * 50, 100 - Math.cos(hourAngle) * 50);
+            ctx.stroke();
+
+            // Draw minute hand
+            const minuteAngle = (minute * Math.PI) / 30;
+            ctx.beginPath();
+            ctx.moveTo(100, 100);
+            ctx.lineTo(100 + Math.sin(minuteAngle) * 70, 100 - Math.cos(minuteAngle) * 70);
+            ctx.stroke();
+        }
+
+        function generateRandomTime() {
+            const hour = Math.floor(Math.random() * 12);
+            const minute = Math.floor(Math.random() * 60);
+            return { hour, minute };
+        }
+
+        function formatTime(hour, minute) {
+            const h = hour === 0 ? 12 : hour;
+            const m = minute < 10 ? `0${minute}` : minute;
+            return `${h}:${m}`;
+        }
+
+        function generateOptions(correctTime) {
+            const options = new Set([correctTime]);
+            while (options.size < 4) {
+                const randomTime = formatTime(Math.floor(Math.random() * 12), Math.floor(Math.random() * 60));
+                options.add(randomTime);
+            }
+            return Array.from(options).sort(() => Math.random() - 0.5);
+        }
+
+        function setupGame() {
+            const { hour, minute } = generateRandomTime();
+            const correctTime = formatTime(hour, minute);
+            drawClock(hour, minute);
+
+            const options = generateOptions(correctTime);
+            const buttonsDiv = document.getElementById('options');
+            buttonsDiv.innerHTML = '';
+
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkTime(option, correctTime);
+                buttonsDiv.appendChild(button);
+            });
+        }
+
+        function checkTime(selectedTime, correctTime) {
+            const feedback = document.getElementById('feedback');
+            if (selectedTime === correctTime) {
+                feedback.textContent = 'Richtig! Gut gemacht!';
+                feedback.style.color = 'green';
+                setTimeout(setupGame, 2000);
+            } else {
+                feedback.textContent = 'Das war nicht richtig. Versuche es erneut!';
+                feedback.style.color = 'red';
+            }
+        }
+
+        setupGame();
+    </script>
+</body>
+</html>
