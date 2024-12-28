@@ -1,4 +1,6 @@
 # KidsSkills
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d94c9bd9-84c9-4d7c-889f-bbc161b1a7bd/deploy-status)](https://app.netlify.com/sites/daddiotime-kidsskills/deploys)
  
 ## TimeLord
 
@@ -20,9 +22,8 @@
 
 ### Vorschau
 
-- [Spiele TimeLord hier](#)
+- [Spiele TimeLord hier](https://daddiotime-kidsskills.netlify.app/timelord/index.html)
 
-![Netlify Status Badge](#)
 
 ### Spieleübersicht
 
