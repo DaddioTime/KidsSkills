@@ -29,34 +29,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawClock(hour, minute) {
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const clockRadius = Math.min(centerX, centerY) - 10;
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Draw clock face
+        // Clock face
         ctx.beginPath();
-        ctx.arc(100, 100, 90, 0, 2 * Math.PI);
+        ctx.arc(centerX, centerY, clockRadius, 0, 2 * Math.PI);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#000';
         ctx.stroke();
 
-        // Draw hour numbers
+        // Hour markings
         for (let i = 1; i <= 12; i++) {
-            const angle = (i * Math.PI) / 6;
-            const x = 100 + Math.sin(angle) * 75;
-            const y = 100 - Math.cos(angle) * 75;
-            ctx.fillText(i, x - 5, y + 5);
+            const angle = (i * 30) * (Math.PI / 180);
+            const x = centerX + Math.cos(angle) * (clockRadius * 0.85);
+            const y = centerY + Math.sin(angle) * (clockRadius * 0.85);
+            ctx.font = 'bold 16px Arial';
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(i, x, y);
         }
 
-        // Draw hour hand
-        const hourAngle = ((hour % 12) + minute / 60) * Math.PI / 6;
+        // Hour hand
+        const hourAngle = ((hour % 12) + minute / 60) * 30 * (Math.PI / 180);
+        const hourHandLength = clockRadius * 0.6;
+        const hourX = centerX + Math.cos(hourAngle - Math.PI / 2) * hourHandLength;
+        const hourY = centerY + Math.sin(hourAngle - Math.PI / 2) * hourHandLength;
         ctx.beginPath();
-        ctx.moveTo(100, 100);
-        ctx.lineTo(100 + Math.sin(hourAngle) * 50, 100 - Math.cos(hourAngle) * 50);
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(hourX, hourY);
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#000';
         ctx.stroke();
 
-        // Draw minute hand
-        const minuteAngle = (minute * Math.PI) / 30;
+        // Minute hand
+        const minuteAngle = minute * 6 * (Math.PI / 180);
+        const minuteHandLength = clockRadius * 0.9;
+        const minuteX = centerX + Math.cos(minuteAngle - Math.PI / 2) * minuteHandLength;
+        const minuteY = centerY + Math.sin(minuteAngle - Math.PI / 2) * minuteHandLength;
         ctx.beginPath();
-        ctx.moveTo(100, 100);
-        ctx.lineTo(100 + Math.sin(minuteAngle) * 70, 100 - Math.cos(minuteAngle) * 70);
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(minuteX, minuteY);
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#000';
         ctx.stroke();
+
+        // Center dot
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 8, 0, 2 * Math.PI);
+        ctx.fillStyle = '#000';
+        ctx.fill();
     }
 
     function generateRandomTime() {
@@ -125,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         options.forEach(option => {
             const button = document.createElement('button');
             button.textContent = option;
+            button.classList.add('option'); // Add the 'option' class here
             button.onclick = () => checkTime(option);
             optionsDiv.appendChild(button);
         });
