@@ -42,16 +42,29 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.strokeStyle = '#000';
         ctx.stroke();
 
-        // Hour markings
-        for (let i = 1; i <= 12; i++) {
+        // Hour markings (Ticks)
+        for (let i = 0; i < 12; i++) {
             const angle = (i * 30) * (Math.PI / 180);
-            const x = centerX + Math.cos(angle) * (clockRadius * 0.85);
-            const y = centerY + Math.sin(angle) * (clockRadius * 0.85);
-            ctx.font = 'bold 16px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(i, x, y);
+            const startX = centerX + Math.cos(angle) * (clockRadius * 0.9);
+            const startY = centerY + Math.sin(angle) * (clockRadius * 0.9);
+            const endX = centerX + Math.cos(angle) * clockRadius;
+            const endY = centerY + Math.sin(angle) * clockRadius;
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+        }
+
+        // Hour numbers
+        ctx.font = 'bold 16px Arial';
+        ctx.fillStyle = '#000';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        for (let i = 1; i <= 12; i++) {
+            const angle = (i * 30 - 90) * (Math.PI / 180); // Adjusted angle to start from 12
+            const x = centerX + Math.cos(angle) * (clockRadius * 0.75); // Position numbers slightly inside the ticks
+            const y = centerY + Math.sin(angle) * (clockRadius * 0.75);
+            ctx.fillText(i.toString(), x, y);
         }
 
         // Hour hand
@@ -170,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             feedbackP.textContent = 'Das war nicht richtig. Versuche es erneut!';
             feedbackP.style.color = 'red';
-            body.classList.add('incorrect-feedback');
             progress.push(false);
         }
         updateProgressBar();
