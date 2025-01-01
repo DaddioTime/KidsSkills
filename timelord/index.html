@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeLord</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Uhrzeit-Detektiv</h1>
+        <p>Welche Uhrzeit wird hier angezeigt?</p>
+        <div class="selection" id="difficultySelection">
+            <h2>Schwierigkeitsgrad wählen:</h2>
+            <button id="easyBtn" class="option">Einfach (volle/halbe Stunde)</button>
+            <button id="mediumBtn" class="option">Mittel (Viertelstunde)</button>
+            <button id="hardBtn" class="option">Schwer (jede Minute)</button>
+        </div>
+        <canvas id="clockCanvas" width="200" height="200" style="border:1px solid #000000; display: none;"></canvas>
+        <div class="buttons" id="options" style="display: none;"></div>
+        <p id="feedback" style="display: none;"></p>
+        <div class="progress-bar" id="progressBar" style="display: none;"></div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
