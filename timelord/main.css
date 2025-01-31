@@ -89,6 +89,28 @@ body {
   transform: scale(0.95);
 }
 
+/* Responsive adjustments for small screens (iPhone) */
+@media (max-width: 600px) {
+  #themeToggle {
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+    padding: 6px;
+  }
+  .buttons {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .option {
+    font-size: 16px;
+    padding: 10px;
+  }
+  #clockCanvas {
+    width: 150px;
+    height: 150px;
+  }
+}
+
 /* Button styles */
 .option {
   background: var(--primary-color);
@@ -130,13 +152,15 @@ body {
   display: block;
 }
 
-/* Buttons container */
+/* Buttons container with fixed minimum height to avoid layout jumps */
 .buttons {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 10px;
   margin-top: 20px;
+  overflow-x: auto;
+  min-height: 60px;
 }
 
 /* Timer display styling */
@@ -259,21 +283,11 @@ body {
   width: 8px;
   height: 8px;
   pointer-events: none;
-  animation: confetti-fall 3s ease-out forwards;
-}
-@keyframes confetti-fall {
-  0% { opacity: 1; transform: translateY(0) rotate(0deg); }
-  100% { opacity: 0; transform: translateY(300px) rotate(360deg); }
+  /* Randomized animation duration and horizontal offset */
+  animation: confetti-fall 2s ease-out forwards;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-  .option {
-    font-size: 16px;
-    padding: 10px;
-  }
-  #clockCanvas {
-    width: 150px;
-    height: 150px;
-  }
+@keyframes confetti-fall {
+  0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateX(var(--x-offset)) translateY(300px) rotate(360deg); }
 }

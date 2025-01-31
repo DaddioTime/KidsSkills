@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const MAX_ROUNDS = 10;
   const ROUND_DURATION = 10; // seconds per round
   let difficultyLevel = null;
+  // Use 24h format for generated time (0-23)
   let currentHour, currentMinute;
   let correctTime;
   let progress = []; // Array of booleans representing correct/incorrect answers
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let timerInterval = null;
   let timeRemaining = ROUND_DURATION;
 
-  // Add event listeners for difficulty selection
+  // Event listeners for difficulty selection
   document.getElementById('easyBtn').addEventListener('click', () => startGame(1));
   document.getElementById('mediumBtn').addEventListener('click', () => startGame(2));
   document.getElementById('hardBtn').addEventListener('click', () => startGame(3));
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tutorialModal.classList.add('hidden');
   }
 
-  // Responsive Canvas Scaling function
+  // Responsive Canvas Scaling
   function resizeCanvas() {
     const containerWidth = canvas.parentElement.clientWidth;
     const newSize = Math.min(containerWidth, 300); // maximum size 300px
@@ -99,6 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
     difficultyLevel = level;
     difficultySelectionDiv.classList.add('hidden');
     gameSection.classList.remove('hidden');
+    // Ensure the clock is visible when the game starts
+    canvas.classList.remove('hidden');
     resizeCanvas();
     progress = [];
     roundCount = 0;
@@ -122,19 +125,24 @@ document.addEventListener('DOMContentLoaded', () => {
     endGameDiv.classList.add('hidden');
     optionsDiv.classList.remove('hidden');
     feedbackP.classList.remove('feedback-show');
+    // Ensure clock is visible after reset
+    canvas.classList.remove('hidden');
     clearInterval(timerInterval);
     setupGame();
   }
 
   /**
    * Draws the clock (classic design) on the canvas using colors adapted to the current theme.
+   * For display, the 24h time is converted to 12h format.
    */
-  function drawClock(hour, minute) {
+  function drawClock(hour24, minute) {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const clockRadius = Math.min(centerX, centerY) - 10;
     const isDark = document.body.classList.contains("dark-mode");
     const defaultColor = isDark ? "#fff" : "#000";
+    // Convert 24h to 12h format (0 becomes 12)
+    const hourForClock = (hour24 % 12) || 12;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -159,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.stroke();
     }
 
-    // Draw hour numbers
+    // Draw hour numbers (always 1 to 12)
     ctx.font = 'bold ' + Math.floor(clockRadius * 0.2) + 'px Arial';
     ctx.fillStyle = defaultColor;
     ctx.textAlign = "center";
@@ -171,8 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillText(i.toString(), x, y);
     }
 
-    // Draw hour hand
-    const hourAngle = ((hour % 12) + minute / 60) * 30 * (Math.PI / 180);
+    // Draw hour hand (using 12h value)
+    const hourAngle = (hourForClock + minute / 60) * 30 * (Math.PI / 180);
     const hourHandLength = clockRadius * 0.6;
     const hourX = centerX + Math.cos(hourAngle - Math.PI / 2) * hourHandLength;
     const hourY = centerY + Math.sin(hourAngle - Math.PI / 2) * hourHandLength;
@@ -209,10 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Generates a random time based on the selected difficulty level.
+   * Generates a random time based on the selected difficulty level in 24h format.
    */
   function generateRandomTime() {
-    const hour = Math.floor(Math.random() * 12);
+    const hour = Math.floor(Math.random() * 24);
     let minute;
     switch (difficultyLevel) {
       case 1:
@@ -232,21 +240,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Formats the time as "H:MM".
+   * Formats the time in "HH:MM" (24h format).
    */
   function formatTime(hour, minute) {
-    const h = hour === 0 ? 12 : hour;
-    const m = minute < 10 ? `0${minute}` : minute;
+    const h = hour < 10 ? "0" + hour : hour;
+    const m = minute < 10 ? "0" + minute : minute;
     return `${h}:${m}`;
   }
 
   /**
-   * Generates 4 time options including the correct time.
+   * Generates 4 time options including the correct time (24h format).
    */
   function generateOptions(correctTime) {
     const options = new Set([correctTime]);
     while (options.size < 4) {
-      const randomHour = Math.floor(Math.random() * 12);
+      const randomHour = Math.floor(Math.random() * 24);
       let randomMinute;
       switch (difficultyLevel) {
         case 1:
@@ -312,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Launches confetti particle effects.
+   * Launches confetti particle effects with randomized horizontal offset and duration.
    */
   function launchConfetti() {
     const confettiCount = 30;
@@ -324,11 +332,16 @@ document.addEventListener('DOMContentLoaded', () => {
       confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
       confetti.style.left = Math.random() * 100 + '%';
       confetti.style.top = '-10px';
-      confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+      // Random horizontal offset between -50px and +50px
+      const xOffset = Math.random() * 100 - 50;
+      confetti.style.setProperty('--x-offset', xOffset + 'px');
+      // Randomize animation duration between 2 and 3 seconds
+      const duration = 2 + Math.random();
+      confetti.style.animationDuration = `${duration}s`;
       container.appendChild(confetti);
       setTimeout(() => {
         confetti.remove();
-      }, 3000);
+      }, duration * 1000);
     }
   }
 
@@ -347,7 +360,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const time = generateRandomTime();
     currentHour = time.hour;
     currentMinute = time.minute;
+    // Format the correct time in 24h format
     correctTime = formatTime(currentHour, currentMinute);
+    // Draw the clock (for display, convert to 12h format)
     drawClock(currentHour, currentMinute);
     const options = generateOptions(correctTime);
     optionsDiv.innerHTML = '';
@@ -413,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Updates the progress bar based on the rounds completed.
+   * Updates the progress bar based on rounds completed.
    */
   function updateProgressBar() {
     progressBarDiv.innerHTML = '';
@@ -438,47 +453,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Checks for achievements based on performance.
-   */
-  function checkAchievements() {
-    let achievements = [];
-    if (score === MAX_ROUNDS) {
-      achievements.push("Perfect Score: All rounds correct!");
-    }
-    const totalTime = reactionTimes.reduce((a, b) => a + b, 0);
-    const avgTime = reactionTimes.length > 0 ? totalTime / reactionTimes.length : 0;
-    if (avgTime < 500) {
-      achievements.push("Lightning Reflexes: Average reaction time under 500ms!");
-    }
-    if (score > 0) {
-      achievements.push("First Success: You got at least one correct!");
-    }
-    if (score >= MAX_ROUNDS / 2) {
-      achievements.push("Skilled Player: More than 50% correct!");
-    }
-    return achievements;
-  }
-
-  /**
-   * Ends the game and displays detailed statistics including the number of correct and incorrect answers.
-   * Also provides an option to restart the game.
+   * Ends the game and displays final statistics.
+   * On the finish screen, only a minimal message is shown.
+   * The clock is hidden to avoid flickering on iPhone.
    */
   function endGame() {
     optionsDiv.classList.add('hidden');
     feedbackP.classList.add('hidden');
     endGameDiv.classList.remove('hidden');
-    finalMessageP.textContent = `Spiel beendet! Deine Punktzahl: ${score} von ${MAX_ROUNDS}`;
-    const totalTime = reactionTimes.reduce((a, b) => a + b, 0);
-    const avgTime = reactionTimes.length > 0 ? (totalTime / reactionTimes.length).toFixed(0) : 0;
-    const correctPercentage = ((score / MAX_ROUNDS) * 100).toFixed(0);
-    const incorrectCount = MAX_ROUNDS - score;
-    let achievements = checkAchievements();
-    statsDiv.innerHTML = `
-      <p>Durchschnittliche Reaktionszeit: ${avgTime} ms</p>
-      <p>Richtige Antworten: ${score} (${correctPercentage}%)</p>
-      <p>Falsche Antworten: ${incorrectCount}</p>
-      <p>Erfolge: ${achievements.length > 0 ? achievements.join(', ') : 'Keine'}</p>
-    `;
+    // Show only a minimal final message (no detailed stats)
+    finalMessageP.textContent = `Spiel beendet!`;
+    statsDiv.innerHTML = ""; // Remove additional stats
+    // Hide the clock to avoid flickering on iPhone
+    canvas.classList.add('hidden');
     restartBtn.focus();
   }
 });
