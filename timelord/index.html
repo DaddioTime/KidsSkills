@@ -1,29 +1,76 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TimeLord</title>
-    <link rel="stylesheet" href="main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimeLord</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div class="container">
-        <h1>TimeLord</h1>
-        <p>Welche Uhrzeit wird hier angezeigt?</p>
-        <div class="selection" id="difficultySelection">
-            <h2>Schwierigkeitsgrad wählen:</h2>
-            <p><button id="easyBtn" class="option">Einfach (volle/halbe Stunde)</button></p>
-            <p><button id="mediumBtn" class="option">Mittel (Viertelstunde)</button></p>
-            <p><button id="hardBtn" class="option">Schwer (Minuten)</button></p>
-        </div>
-        <canvas id="clockCanvas" width="200" height="200" style="display: none;"></canvas>
-        <div class="buttons" id="options" style="display: none;">
-            <!-- Buttons will be generated here -->
-        </div>
-        <p id="feedback" style="display: none;"></p>
-        <div class="progress-bar" id="progressBar" style="display: none;"></div>
-    </div>
+  <!-- Dark Mode Toggle Button (hidden during tutorial) -->
+  <button id="themeToggle" class="option">🌙</button>
 
-    <script src="main.js"></script>
+  <main class="container">
+    <header>
+      <h1>TimeLord</h1>
+    </header>
+
+    <!-- Difficulty Selection Section -->
+    <section id="difficultySelection" aria-label="Schwierigkeitsgrad auswählen">
+      <h2>Schwierigkeitsgrad auswählen</h2>
+      <p>
+        <button id="easyBtn" class="option" aria-label="Einfach (volle/halbe Stunde)">
+          Einfach (volle/halbe Stunde)
+        </button>
+      </p>
+      <p>
+        <button id="mediumBtn" class="option" aria-label="Mittel (Viertelstunde)">
+          Mittel (Viertelstunde)
+        </button>
+      </p>
+      <p>
+        <button id="hardBtn" class="option" aria-label="Schwer (Minuten)">
+          Schwer (Minuten)
+        </button>
+      </p>
+    </section>
+
+    <!-- Game Section -->
+    <section id="gameSection" class="hidden" aria-live="polite">
+      <canvas id="clockCanvas" width="200" height="200" aria-label="Uhranzeige"></canvas>
+      <div id="gameInfo">
+        <p id="roundInfo">Runde: 0 / 10</p>
+        <p id="scoreInfo">Punktzahl: 0</p>
+        <p id="timerDisplay">Zeit: 10.0 s</p>
+      </div>
+      <div id="options" class="buttons"></div>
+      <p id="feedback"></p>
+      <div id="progressBar" class="progress-bar"></div>
+      <div id="endGame" class="hidden">
+        <p id="finalMessage"></p>
+        <div id="stats"></div>
+        <button id="restartBtn" class="option" aria-label="Spiel neu starten">Neu starten</button>
+      </div>
+    </section>
+
+    <!-- Audio Elements for Sound Effects -->
+    <audio id="correctSound" src="correct.mp3"></audio>
+    <audio id="incorrectSound" src="incorrect.mp3"></audio>
+  </main>
+
+  <!-- Tutorial / Onboarding Modal (placed outside the container so the "Verstanden" button is clickable) -->
+  <div id="tutorialModal" class="modal">
+    <div class="modal-content">
+      <h2>Spielanleitung</h2>
+      <p>
+        Willkommen bei TimeLord! Deine Aufgabe ist es, die korrekte Uhrzeit zu erkennen, die auf der Uhr angezeigt wird.
+        Wähle die richtige Zeitoption, bevor der Timer abläuft. Deine Reaktionszeit wird für jede Runde gemessen.
+        Am Ende erhältst du detaillierte Statistiken und Erfolge basierend auf deiner Leistung.
+      </p>
+      <button id="closeTutorial" class="option">Verstanden</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
