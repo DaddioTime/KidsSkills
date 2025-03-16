@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belohnungssystem Timeline</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .timeline {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            border-bottom: 2px solid #000; /* Darker border for better printing */
+            height: 400px;
+            margin-bottom: 20px;
+            padding-top: 30px;
+        }
+        .bar {
+            width: 50px;
+            position: relative;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            transition: background-color 0.3s ease;
+            /* Add border to ensure bars are visible when printed */
+            border: 1px solid #333;
+        }
+        .emoji {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .value {
+            position: absolute;
+            top: -25px;
+            background: #343a40;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            /* Ensure visibility when printing */
+            border: 1px solid #000;
+        }
+        .input-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .input-container input[type="number"]::-webkit-inner-spin-button, 
+        .input-container input[type="number"]::-webkit-outer-spin-button {  
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .input-container input {
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .current-points {
+            font-size: 18px;
+            color: #333;
+        }
+        .bar-label {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            font-size: 12px;
+            color: #333; /* Darker color for better printing */
+            font-weight: bold; /* Make it bold for better printing */
+        }
+        .next-milestone {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #006400; /* Darker green for better printing */
+            font-weight: bold;
+        }
+        
+        /* Print-specific styles */
+        @media print {
+            body {
+                background-color: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            .bar {
+                box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.05); /* Fallback for filled bars */
+                border: 1px solid #333 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            .value {
+                background-color: #343a40 !important;
+                color: white !important;
+                border: 1px solid #000 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            .timeline {
+                border-bottom: 2px solid #000 !important;
+            }
+            .completed {
+                background-color: #4caf50 !important; /* Force green for completed */
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            .pending {
+                background-color: #e0e0e0 !important; /* Force gray for pending */
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            .bar-pattern {
+                background-image: repeating-linear-gradient(45deg, #4caf50, #4caf50 10px, #3e8e41 10px, #3e8e41 20px) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Belohnungssystem - Punkteübersicht</h2>
+    <div class="input-container">
+        <span class="current-points">Aktuelle Punkte: </span>
+        <input type="number" id="currentValue" placeholder="Punkte eingeben">
+    </div>
+    <div id="timeline" class="timeline"></div>
+    <div id="nextMilestone" class="next-milestone"></div>
+
+    <script>
+        const milestones = [
+            { value: 10, emoji: "🌲", label: "Kleine Belohnung" },
+            { value: 50, emoji: "🌙", label: "50 Punkte" },
+            { value: 100, emoji: "🧗‍♂️", label: "100 Punkte" },
+            { value: 200, emoji: "🎲", label: "200 Punkte" },
+            { value: 400, emoji: "🌲", label: "400 Punkte" },
+            { value: 500, emoji: "🏊", label: "500 Punkte" },
+            { value: 550, emoji: "🫢", label: "550 Punkte" },
+            { value: 600, emoji: "🍪", label: "600 Punkte" },
+            { value: 650, emoji: "🍩", label: "650 Punkte" },
+            { value: 700, emoji: "🌲", label: "700 Punkte" },
+            { value: 750, emoji: "🌭", label: "750 Punkte" },
+            { value: 800, emoji: "🍨", label: "800 Punkte" },
+            { value: 850, emoji: "🌲", label: "850 Punkte" },
+            { value: 900, emoji: "🍕", label: "900 Punkte" },
+            { value: 950, emoji: "🌈", label: "950 Punkte" },
+            { value: 1000, emoji: "🎢", label: "1000 Punkte" },
+            { value: 1200, emoji: "🍔🍟", label: "1200 Punkte" },
+            { value: 1500, emoji: "🏙️", label: "1500 Punkte" },
+            { value: 2000, emoji: "🚗", label: "2000 Punkte" },
+            { value: 2500, emoji: "📺", label: "2500 Punkte" },
+            { value: 3000, emoji: "✈️", label: "3000 Punkte" },
+            { value: 3500, emoji: "🍿", label: "3500 Punkte" },
+            { value: 4000, emoji: "🇪🇸⛪︎", label: "4000 Punkte" },
+        ];
+
+        function updateTimeline() {
+            const currentValue = parseInt(document.getElementById('currentValue').value) || 0;
+            const timeline = document.getElementById('timeline');
+            const nextMilestoneDiv = document.getElementById('nextMilestone');
+            timeline.innerHTML = '';
+            
+            // Berechne den höchsten Meilenstein für die Skalierung
+            const maxMilestone = milestones[milestones.length - 1].value;
+            
+            // Finde den nächsten zu erreichenden Meilenstein
+            let nextMilestone = null;
+            for (let milestone of milestones) {
+                if (milestone.value > currentValue) {
+                    nextMilestone = milestone;
+                    break;
+                }
+            }
+            
+            // Aktualisiere Anzeige für nächsten Meilenstein
+            if (nextMilestone) {
+                const pointsNeeded = nextMilestone.value - currentValue;
+                nextMilestoneDiv.textContent = `Nächster Meilenstein: ${nextMilestone.emoji} (${nextMilestone.value} Punkte)`;
+            } else {
+                nextMilestoneDiv.textContent = "Alle Meilensteine erreicht! 🎉";
+            }
+
+            milestones.forEach(item => {
+                const bar = document.createElement('div');
+                bar.classList.add('bar');
+                
+                // Skaliere die Höhe basierend auf dem maximalen Meilenstein
+                const heightPercentage = item.value / maxMilestone;
+                const barHeight = Math.max(20, heightPercentage * 380);
+                bar.style.height = `${barHeight}px`;
+                
+                // Füge Klassen für den Druckstatus hinzu
+                if (currentValue >= item.value) {
+                    bar.classList.add('completed');
+                    bar.classList.add('bar-pattern'); // Pattern für bessere Druckausgabe
+                    bar.style.backgroundColor = '#4caf50';
+                } else {
+                    bar.classList.add('pending');
+                    bar.style.backgroundColor = '#e0e0e0';
+                }
+
+                const emoji = document.createElement('span');
+                emoji.classList.add('emoji');
+                emoji.textContent = item.emoji;
+
+                const valueLabel = document.createElement('div');
+                valueLabel.classList.add('value');
+                valueLabel.textContent = item.value;
+                
+                // Füge Label hinzu, wenn vorhanden
+                if (item.label) {
+                    const barLabel = document.createElement('div');
+                    barLabel.classList.add('bar-label');
+                    barLabel.textContent = item.label.replace(' Punkte', '');
+                    bar.appendChild(barLabel);
+                }
+                
+                bar.appendChild(emoji);
+                bar.appendChild(valueLabel);
+                timeline.appendChild(bar);
+            });
+            
+            // Speichere den aktuellen Wert für die Druckausgabe
+            document.body.setAttribute('data-current-value', currentValue);
+        }
+
+        document.getElementById('currentValue').addEventListener('input', updateTimeline);
+
+        // Diese Zeile sorgt dafür, dass die Timeline sofort nach dem Laden angezeigt wird
+        window.addEventListener('DOMContentLoaded', () => {
+            updateTimeline();
+        });
+        
+        // Füge eine Funktion hinzu, die sicherstellt, dass beim Drucken die Farben korrekt sind
+        window.addEventListener('beforeprint', () => {
+            const currentValue = parseInt(document.getElementById('currentValue').value) || 0;
+            document.querySelectorAll('.bar').forEach(bar => {
+                const valueText = bar.querySelector('.value').textContent;
+                const value = parseInt(valueText);
+                
+                if (currentValue >= value) {
+                    // Füge zusätzliche Markierungen für den Druck hinzu
+                    bar.style.border = '2px solid #000';
+                    // Zusätzliches Element für bessere Sichtbarkeit beim Drucken
+                    if (!bar.querySelector('.print-marker')) {
+                        const marker = document.createElement('div');
+                        marker.className = 'print-marker';
+                        marker.style.width = '100%';
+                        marker.style.height = '100%';
+                        marker.style.position = 'absolute';
+                        marker.style.top = '0';
+                        marker.style.left = '0';
+                        marker.style.backgroundColor = '#4caf50';
+                        marker.style.zIndex = '-1';
+                        bar.appendChild(marker);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
