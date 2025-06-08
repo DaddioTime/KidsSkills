@@ -1,6 +1,6 @@
 # KidsSkills – Lernspiele für Kinder
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d94c9bd9-84c9-4d7c-889f-bbc161b1a7bd/deploy-status)](https://app.netlify.com/sites/daddiotime-kidsskills/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4598ceb6-41ec-4c74-ad49-37ce0a6f5064/deploy-status)](https://app.netlify.com/projects/daddiotime-kidsskills/deploys)
 
 Dieses Projekt vereint mehrere Lern-Apps für Kinder (und Erwachsene), die spielerisch Fähigkeiten in den Bereichen Rechnen, Uhrzeit, Schreiben, Gedächtnis und Motivation fördern.
 
@@ -21,7 +21,7 @@ Eine interaktive Web-App zum Üben der Grundrechenarten.
 - Dark-/Light-Mode und Offline-Nutzung
 - Mehrsprachigkeit: Deutsch & Englisch
 
-👉 [Jetzt üben](https://daddiotime-mentalmath.netlify.app/MentalMath/index.html)
+👉 [Jetzt üben](https://daddiotime-kidsskills.netlify.app/MentalMath/index.html)
 
 ---
 
@@ -48,9 +48,9 @@ Ein klassisches Reaktions- und Gedächtnisspiel mit Licht- und Tonfolgen.
 - 3 Versionen: AI, Retro, Classic
 - Solo-Spielmodus mit Highscore-Speicherung
 
-👉 [AI-Version spielen](https://daddiotime-simonmemorygame.netlify.app/SimonMemoryGame/version-ai/index.html)  
-👉 [Retro-Version spielen](https://daddiotime-simonmemorygame.netlify.app/SimonMemoryGame/version-retro/index.html)  
-👉 [Classic-Version spielen](https://daddiotime-simonmemorygame.netlify.app/SimonMemoryGame/version-classic/index.html)
+👉 [AI-Version spielen](https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-ai/index.html)  
+👉 [Retro-Version spielen](https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-retro/index.html)  
+👉 [Classic-Version spielen](https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-classic/index.html)
 
 ---
 
