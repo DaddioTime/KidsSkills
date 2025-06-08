@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Enable iOS PWA support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <title>Math Trainer</title>
+
+  <!-- Link CSS -->
+  <link rel="stylesheet" href="main.css" />
+
+  <!-- Manifest for PWA -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+
+  <!-- Favicon PNG -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+
+</head>
+<body>
+  <div class="container">
+    <!-- Operation Selection -->
+    <div class="selection" id="operationSelection">
+      <h2 data-i18n="chooseOperation">Choose the operation:</h2>
+      <button id="additionBtn" class="operation-button" data-i18n="addition">Addition (+)</button>
+      <button id="subtractionBtn" class="operation-button" data-i18n="subtraction">Subtraction (-)</button>
+      <button id="multiplicationBtn" class="operation-button" data-i18n="multiplication">Multiplication (x)</button>
+      <button id="divisionBtn" class="operation-button" data-i18n="division">Division (÷)</button>
+    </div>
+
+    <!-- Number Range Selection -->
+    <div class="selection" id="numberRangeSelection" style="display: none;">
+      <h2 data-i18n="chooseNumberRange">Choose the number range:</h2>
+      <button id="rangeBtn5" class="number-range" data-i18n="upTo5">Up to 5</button>
+      <button id="rangeBtn10" class="number-range" data-i18n="upTo10">Up to 10</button>
+      <button id="rangeBtn20" class="number-range" data-i18n="upTo20">Up to 20</button>
+      <button id="rangeBtn50" class="number-range" data-i18n="upTo50">Up to 50</button>
+      <button id="rangeBtn100" class="number-range" data-i18n="upTo100">Up to 100</button>
+      <button id="rangeBtnTens" class="number-range" data-i18n="tens">Tens (e.g. 20+30)</button>
+      <button id="rangeBtnFives" class="number-range" data-i18n="fives">Fives (e.g. 25+15)</button>
+    </div>
+
+    <!-- Question & Answer Options -->
+    <div class="question" id="question" style="display: none;"></div>
+    <div class="options" id="options" style="display: none;">
+      <button class="option"></button>
+      <button class="option"></button>
+      <button class="option"></button>
+      <button class="option"></button>
+    </div>
+
+    <!-- Result Area -->
+    <div class="result" id="result" style="display: none;">
+      <span id="correctCount" class="correct" data-i18n="correct">Correct: 0</span> |
+      <span id="incorrectCount" class="incorrect" data-i18n="incorrect">Incorrect: 0</span>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar" style="display: none;"></div>
+
+    <!-- Modal for Incorrect Answers -->
+    <div id="incorrectModal" class="modal">
+      <div class="modal-content" id="modalContent">
+        <p id="modalMessage" data-i18n="correctAnswerWas">The correct answer was: </p>
+      </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="gameOverModal" class="modal">
+      <div class="gameOver-content" id="gameOverContent">
+        <p id="gameOverMessage" data-i18n="gameOverMessage"></p>
+        <p id="gameOverEmoji" style="font-size: 2em;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Version Display -->
+  <div id="versionDisplay"></div>
+
+  <!-- Main JavaScript -->
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SimonMemoryGame - Classic</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+<body>
+  <!-- Banner Section -->
+  <header class="banner-wrapper">
+    <div class="banner">
+      <div class="headericon"></div>
+      <h1>Simon</h1>
+    </div>
+  </header>
+
+  <!-- Controls Section -->
+  <section class="controls">
+    <a class="btn" id="startgame" href="#"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Start</a>
+    <span class="score">00</span>
+    <a class="btn" id="resetgame" href="#"><i class="fa fa-refresh" aria-hidden="true"></i> Reset</a>
+  </section>
+
+  <!-- Game Buttons -->
+  <section class="buttons">
+    <div class="top">
+      <div class="button red" data-color="red" data-id="1"></div>
+      <div class="button green" data-color="green" data-id="2"></div>
+    </div>
+    <div class="message">Simon</div>
+    <div class="bottom">
+      <div class="button yellow" data-color="yellow" data-id="4"></div>
+      <div class="button blue" data-color="blue" data-id="3"></div>
+    </div>
+  </section>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+</html>
