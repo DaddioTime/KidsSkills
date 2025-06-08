@@ -4,11 +4,11 @@
 
 Dieses Projekt vereint mehrere Lern-Apps für Kinder (und Erwachsene), die spielerisch Fähigkeiten in den Bereichen Rechnen, Uhrzeit, Schreiben, Gedächtnis und Motivation fördern.
 
+👉 [Alle Projekte](https://daddiotime-kidsskills.netlify.app/ProjectHub/index.html)
+
 ---
 
 ## 🔢 MentalMath
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/0e65c04f-56d6-4123-8b2d-10ead66a1c90/deploy-status)](https://app.netlify.com/sites/daddiotime-mentalmath/deploys)
 
 Eine interaktive Web-App zum Üben der Grundrechenarten.
 
@@ -21,7 +21,7 @@ Eine interaktive Web-App zum Üben der Grundrechenarten.
 - Dark-/Light-Mode und Offline-Nutzung
 - Mehrsprachigkeit: Deutsch & Englisch
 
-👉 [Jetzt üben](https://daddiotime-mentalmath.netlify.app/index.html)
+👉 [Jetzt üben](https://daddiotime-mentalmath.netlify.app/MentalMath/index.html)
 
 ---
 
@@ -35,7 +35,7 @@ Ein Lernspiel zur Uhrzeiterkennung auf analogen Zifferblättern.
 - Fortschrittsanzeige mit 10 Kreisen
 - Automatisch neue Aufgaben
 
-👉 [Spiele TimeLord](https://daddiotime-kidsskills.netlify.app/apps/timelord/index.html)
+👉 [Spiele TimeLord](https://daddiotime-kidsskills.netlify.app/timelord/index.html)
 
 ---
 
@@ -48,9 +48,9 @@ Ein klassisches Reaktions- und Gedächtnisspiel mit Licht- und Tonfolgen.
 - 3 Versionen: AI, Retro, Classic
 - Solo-Spielmodus mit Highscore-Speicherung
 
-👉 [AI-Version spielen](https://daddiotime-simonmemorygame.netlify.app/version-ai/index.html)  
-👉 [Retro-Version spielen](https://daddiotime-simonmemorygame.netlify.app/version-retro/index.html)  
-👉 [Classic-Version spielen](https://daddiotime-simonmemorygame.netlify.app/version-classic/index.html)
+👉 [AI-Version spielen](https://daddiotime-simonmemorygame.netlify.app/SimonMemoryGame/version-ai/index.html)  
+👉 [Retro-Version spielen](https://daddiotime-simonmemorygame.netlify.app/SimonMemoryGame/version-retro/index.html)  
+👉 [Classic-Version spielen](https://daddiotime-simonmemorygame.netlify.app/SimonMemoryGame/version-classic/index.html)
 
 ---
 
@@ -64,7 +64,7 @@ Ein visuelles Belohnungssystem zur Motivation.
 - Emoji-Icons & Beschreibungen
 - Druckfreundliches Design
 
-👉 [Belohnungssystem ansehen](https://daddiotime-kidsskills.netlify.app/apps/rewards/index.html)
+👉 [Belohnungssystem ansehen](https://daddiotime-kidsskills.netlify.app/rewards/index.html)
 
 ---
 
@@ -79,7 +79,7 @@ Ein Spiel zum Üben des Buchstabenschreibens.
 - Anpassbare Farben & Hilfslinien
 - Fortschrittsanzeige
 
-👉 [Buchstaben üben](https://daddiotime-kidsskills.netlify.app/apps/lettertracing/index.html)
+👉 [Buchstaben üben](https://daddiotime-kidsskills.netlify.app/lettertracing/index.html)
 
 ---
 
