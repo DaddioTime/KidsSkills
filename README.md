@@ -35,7 +35,7 @@ Ein Lernspiel zur Uhrzeiterkennung auf analogen Zifferblättern.
 - Fortschrittsanzeige mit 10 Kreisen
 - Automatisch neue Aufgaben
 
-👉 [Spiele TimeLord](https://daddiotime-kidsskills.netlify.app/timelord/index.html)
+👉 [Spiele TimeLord](https://daddiotime-kidsskills.netlify.app/apps/timelord/index.html)
 
 ---
 
@@ -64,7 +64,7 @@ Ein visuelles Belohnungssystem zur Motivation.
 - Emoji-Icons & Beschreibungen
 - Druckfreundliches Design
 
-👉 [Belohnungssystem ansehen](https://daddiotime-kidsskills.netlify.app/rewards/index.html)
+👉 [Belohnungssystem ansehen](https://daddiotime-kidsskills.netlify.app/apps/rewards/index.html)
 
 ---
 
@@ -79,7 +79,7 @@ Ein Spiel zum Üben des Buchstabenschreibens.
 - Anpassbare Farben & Hilfslinien
 - Fortschrittsanzeige
 
-👉 [Buchstaben üben](https://daddiotime-kidsskills.netlify.app/lettertracing/index.html)
+👉 [Buchstaben üben](https://daddiotime-kidsskills.netlify.app/apps/lettertracing/index.html)
 
 ---
 
