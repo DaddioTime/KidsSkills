@@ -4,130 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Uhr-Spiel</title>
-  <style>
-    body { font-family: sans-serif; text-align: center; background: #eef; margin: 0; padding: 0; }
-    h1 { margin: 20px; font-size: 6vmin; }
-    #clocks { display: flex; justify-content: center; flex-wrap: wrap; gap: 2vmin; padding: 10px; }
-    .clock-container { flex: 0 1 30vmin; display: flex; justify-content: center; align-items: center; }
-    canvas { background: #fff; border: 2px solid #89c; border-radius: 50%; cursor: pointer; width: 100%; aspect-ratio: 1; }
-    #message { margin-top: 15px; font-size: 5vmin; font-weight: bold; }
-    #scoreboard { margin-top: 10px; font-size: 4vmin; }
-  </style>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <h1 id="prompt">Klicke die Uhr, die <span id="targetTime"></span> Uhr an!</h1>
+  <h1 id="prompt"><span id="promptPrefix"></span> <span id="targetTime"></span> Uhr!</h1>
+  <div id="controls">
+    <label id="langLabel" for="langSelect">Sprache</label>
+    <select id="langSelect">
+      <option value="de">DE</option>
+      <option value="en">EN</option>
+    </select>
+    <label id="difficultyLabel" for="difficultySelect">Schwierigkeit</label>
+    <select id="difficultySelect">
+      <option value="quarter">Viertel</option>
+      <option value="random">Minuten</option>
+    </select>
+    <label><input type="checkbox" id="soundToggle">🔊</label>
+    <button id="contrastBtn" type="button">☀/🌙</button>
+  </div>
   <div id="clocks"></div>
   <div id="message"></div>
-  <div id="scoreboard">Runde: <span id="round">0</span> | Punkte: <span id="score">0</span></div>
+  <div id="scoreboard">
+    <span id="roundLabel">Runde</span>: <span id="round">0</span> |
+    <span id="scoreLabel">Punkte</span>: <span id="score">0</span> |
+    <span id="highScoreLabel">Rekord</span>: <span id="highScore">0</span>
+  </div>
+  <div id="errorInfo"></div>
 
-  <script>
-    const CLOCK_COUNT = 4;
-    const clocksDiv = document.getElementById('clocks');
-    const targetSpan = document.getElementById('targetTime');
-    const messageDiv = document.getElementById('message');
-    const roundSpan = document.getElementById('round');
-    const scoreSpan = document.getElementById('score');
-
-    // Aktueller Spielzustand
-    let currentOptions = [];
-    let currentTarget = null;
-    let roundCount = 0;
-    let scoreCount = 0;
-
-    function drawClock(canvas, hours, minutes) {
-      const size = Math.min(canvas.parentElement.clientWidth, 300);
-      if (size < 50) return;
-      canvas.width = size;
-      canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      const r = size / 2;
-      ctx.clearRect(0, 0, size, size);
-      ctx.save();
-      ctx.translate(r, r);
-      // Zifferblatt
-      ctx.beginPath(); ctx.arc(0, 0, r - 5, 0, 2 * Math.PI); ctx.fillStyle = '#fff'; ctx.fill();
-      // Zahlen
-      ctx.font = `${r * 0.15}px Arial`;
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      for (let n = 1; n <= 12; n++) {
-        const ang = n * Math.PI / 6;
-        ctx.rotate(ang);
-        ctx.translate(0, -r * 0.85);
-        ctx.rotate(-ang);
-        ctx.fillStyle = '#000'; ctx.fillText(n.toString(), 0, 0);
-        ctx.rotate(ang);
-        ctx.translate(0, r * 0.85);
-        ctx.rotate(-ang);
-      }
-      // Zeiger
-      function drawHand(angle, length, width, color) {
-        ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineCap = 'round';
-        ctx.moveTo(0, 0); ctx.rotate(angle); ctx.lineTo(0, -length); ctx.stroke(); ctx.rotate(-angle);
-      }
-      // Stundenzeiger (rot)
-      const hourAng = ((hours % 12) + minutes / 60) * Math.PI / 6;
-      drawHand(hourAng, r * 0.5, 6, 'red');
-      // Minutenzeiger (blau)
-      const minAng = minutes * Math.PI / 30;
-      drawHand(minAng, r * 0.8, 4, 'blue');
-      ctx.restore();
-    }
-
-    function pickRandomTime() {
-      return { h: Math.floor(Math.random() * 12) + 1, m: Math.floor(Math.random() * 4) * 15 };
-    }
-
-    function formatTime({ h, m }) { return `${h}:${m.toString().padStart(2, '0')}`; }
-
-    function updateScoreboard() {
-      roundSpan.textContent = roundCount;
-      scoreSpan.textContent = scoreCount;
-    }
-
-    function setupRound() {
-      roundCount++;
-      clocksDiv.innerHTML = '';
-      messageDiv.textContent = '';
-      currentTarget = pickRandomTime();
-      targetSpan.textContent = formatTime(currentTarget);
-      currentOptions = [currentTarget];
-      while (currentOptions.length < CLOCK_COUNT) {
-        const t = pickRandomTime();
-        if (!currentOptions.some(o => o.h === t.h && o.m === t.m)) currentOptions.push(t);
-      }
-      shuffle(currentOptions);
-      currentOptions.forEach(opt => {
-        const container = document.createElement('div'); container.className = 'clock-container';
-        const canvas = document.createElement('canvas');
-        canvas.dataset.h = opt.h; canvas.dataset.m = opt.m;
-        canvas.addEventListener('click', () => onClockClick(opt));
-        container.append(canvas);
-        clocksDiv.append(container);
-        drawClock(canvas, opt.h, opt.m);
-      });
-      updateScoreboard();
-    }
-
-    function onClockClick(opt) {
-      if (opt.h === currentTarget.h && opt.m === currentTarget.m) {
-        scoreCount++;
-        messageDiv.textContent = 'Richtig!';
-        updateScoreboard();
-        setTimeout(setupRound, 1000);
-      } else {
-        messageDiv.textContent = 'Falsch, versuche es nochmal.';
-      }
-    }
-
-    function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }}
-
-    window.addEventListener('resize', () => {
-      document.querySelectorAll('canvas').forEach(c => drawClock(c, +c.dataset.h, +c.dataset.m));
-    });
-    document.addEventListener('DOMContentLoaded', () => {
-      updateScoreboard();
-      setupRound();
-    });
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>

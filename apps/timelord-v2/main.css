@@ -1,0 +1,75 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background: #eef;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 20px;
+  font-size: 6vmin;
+}
+
+#controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+label {
+  font-size: 4vmin;
+}
+
+select,
+button[type="checkbox"] {
+  font-size: 4vmin;
+}
+
+#clocks {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2vmin;
+  padding: 10px;
+}
+
+.clock-container {
+  flex: 0 1 30vmin;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  background: #fff;
+  border: 2px solid #89c;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+#message {
+  margin-top: 15px;
+  font-size: 5vmin;
+  font-weight: bold;
+}
+
+#scoreboard {
+  margin-top: 10px;
+  font-size: 4vmin;
+}
+
+.high-contrast body,
+body.high-contrast {
+  background: #000;
+  color: #fff;
+}
+
+@media (max-width: 500px) {
+  .clock-container {
+    flex: 0 1 45vmin;
+  }
+}
