@@ -12,8 +12,9 @@ Ein interaktives Spiel, bei dem Kinder (und Erwachsene) auf analogen Zifferblät
 - **Vier Auswahlmöglichkeiten**: Klicke die richtige Uhr aus vier Optionen  
 - **Sofortiges Feedback**: „Richtig!“ oder „Falsch, versuche es nochmal.“  
 - **Automatischer Rundenwechsel**: Nach einem richtigen Klick startet die nächste Aufgabe automatisch  
-- **Farbige Zeiger**: Stundenzeiger in **Rot**, Minutenzeiger in **Blau**  
-- **Responsives Design**: Optimiert für Desktop, Tablets und Smartphones  
+- **Farbige Zeiger**: Stundenzeiger in **Rot**, Minutenzeiger in **Blau**
+- **Sprachausgabe**: Liest die Zielzeit automatisch vor
+- **Responsives Design**: Optimiert für Desktop, Tablets und Smartphones
 
 ---
 

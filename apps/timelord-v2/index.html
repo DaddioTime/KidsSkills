@@ -24,6 +24,15 @@
     const targetSpan = document.getElementById('targetTime');
     const messageDiv = document.getElementById('message');
 
+    function speak(text) {
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'de-DE';
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utter);
+      }
+    }
+
     // Aktueller Spielzustand
     let currentOptions = [];
     let currentTarget = null;
@@ -78,6 +87,7 @@
       messageDiv.textContent = '';
       currentTarget = pickRandomTime();
       targetSpan.textContent = formatTime(currentTarget);
+      speak(`Klicke die Uhr, die ${formatTime(currentTarget)} Uhr an!`);
       currentOptions = [currentTarget];
       while (currentOptions.length < CLOCK_COUNT) {
         const t = pickRandomTime();
