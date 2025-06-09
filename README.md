@@ -5,6 +5,7 @@
 Dieses Projekt vereint mehrere Lern-Apps für Kinder (und Erwachsene), die spielerisch Fähigkeiten in den Bereichen Rechnen, Uhrzeit, Schreiben, Gedächtnis und Motivation fördern.
 
 👉 [Alle Projekte](https://daddiotime-kidsskills.netlify.app/ProjectHub/index.html)
+👉 [Alle Projekte New Design](https://daddiotime-kidsskills.netlify.app/ProjectHub/index-v2.html)
 
 ---
 
