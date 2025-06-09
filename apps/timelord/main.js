@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Game settings
   const MAX_ROUNDS = 10;
-  const ROUND_DURATION = 10; // seconds per round
+  const ROUND_DURATION = 30; // seconds per round
   let difficultyLevel = null;
   // Use 24h format for generated time (0-23)
   let currentHour, currentMinute;
