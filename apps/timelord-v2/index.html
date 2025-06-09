@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uhr-Spiel</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #eef; margin: 0; padding: 0; }
+    h1 { margin: 20px; font-size: 6vmin; }
+    #clocks { display: flex; justify-content: center; flex-wrap: wrap; gap: 2vmin; padding: 10px; }
+    .clock-container { flex: 0 1 30vmin; display: flex; justify-content: center; align-items: center; }
+    canvas { background: #fff; border: 2px solid #89c; border-radius: 50%; cursor: pointer; width: 100%; aspect-ratio: 1; }
+    #message { margin-top: 15px; font-size: 5vmin; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1 id="prompt">Klicke die Uhr, die <span id="targetTime"></span> Uhr an!</h1>
+  <div id="clocks"></div>
+  <div id="message"></div>
+
+  <script>
+    const CLOCK_COUNT = 4;
+    const clocksDiv = document.getElementById('clocks');
+    const targetSpan = document.getElementById('targetTime');
+    const messageDiv = document.getElementById('message');
+
+    // Aktueller Spielzustand
+    let currentOptions = [];
+    let currentTarget = null;
+
+    function drawClock(canvas, hours, minutes) {
+      const size = Math.min(canvas.parentElement.clientWidth, 300);
+      if (size < 50) return;
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const r = size / 2;
+      ctx.clearRect(0, 0, size, size);
+      ctx.save();
+      ctx.translate(r, r);
+      // Zifferblatt
+      ctx.beginPath(); ctx.arc(0, 0, r - 5, 0, 2 * Math.PI); ctx.fillStyle = '#fff'; ctx.fill();
+      // Zahlen
+      ctx.font = `${r * 0.15}px Arial`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      for (let n = 1; n <= 12; n++) {
+        const ang = n * Math.PI / 6;
+        ctx.rotate(ang);
+        ctx.translate(0, -r * 0.85);
+        ctx.rotate(-ang);
+        ctx.fillStyle = '#000'; ctx.fillText(n.toString(), 0, 0);
+        ctx.rotate(ang);
+        ctx.translate(0, r * 0.85);
+        ctx.rotate(-ang);
+      }
+      // Zeiger
+      function drawHand(angle, length, width, color) {
+        ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineCap = 'round';
+        ctx.moveTo(0, 0); ctx.rotate(angle); ctx.lineTo(0, -length); ctx.stroke(); ctx.rotate(-angle);
+      }
+      // Stundenzeiger (rot)
+      const hourAng = ((hours % 12) + minutes / 60) * Math.PI / 6;
+      drawHand(hourAng, r * 0.5, 6, 'red');
+      // Minutenzeiger (blau)
+      const minAng = minutes * Math.PI / 30;
+      drawHand(minAng, r * 0.8, 4, 'blue');
+      ctx.restore();
+    }
+
+    function pickRandomTime() {
+      return { h: Math.floor(Math.random() * 12) + 1, m: Math.floor(Math.random() * 4) * 15 };
+    }
+
+    function formatTime({ h, m }) { return `${h}:${m.toString().padStart(2, '0')}`; }
+
+    function setupRound() {
+      clocksDiv.innerHTML = '';
+      messageDiv.textContent = '';
+      currentTarget = pickRandomTime();
+      targetSpan.textContent = formatTime(currentTarget);
+      currentOptions = [currentTarget];
+      while (currentOptions.length < CLOCK_COUNT) {
+        const t = pickRandomTime();
+        if (!currentOptions.some(o => o.h === t.h && o.m === t.m)) currentOptions.push(t);
+      }
+      shuffle(currentOptions);
+      currentOptions.forEach(opt => {
+        const container = document.createElement('div'); container.className = 'clock-container';
+        const canvas = document.createElement('canvas');
+        canvas.dataset.h = opt.h; canvas.dataset.m = opt.m;
+        canvas.addEventListener('click', () => onClockClick(opt));
+        container.append(canvas);
+        clocksDiv.append(container);
+        drawClock(canvas, opt.h, opt.m);
+      });
+    }
+
+    function onClockClick(opt) {
+      if (opt.h === currentTarget.h && opt.m === currentTarget.m) {
+        messageDiv.textContent = 'Richtig!'; setTimeout(setupRound, 1000);
+      } else {
+        messageDiv.textContent = 'Falsch, versuche es nochmal.';
+      }
+    }
+
+    function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }}
+
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('canvas').forEach(c => drawClock(c, +c.dataset.h, +c.dataset.m));
+    });
+    document.addEventListener('DOMContentLoaded', setupRound);
+  </script>
+</body>
+</html>

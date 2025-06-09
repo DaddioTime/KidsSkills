@@ -39,6 +39,22 @@ Ein Lernspiel zur Uhrzeiterkennung auf analogen Zifferblättern.
 
 ---
 
+## 🕰️ TimeLord-v2
+
+Ein weiteres Lernspiel zur Uhrzeiterkennung im Stil von TimeLord.
+Features
+
+**Features**
+- Vier Uhren mit jeweils zufälligen Viertelstundenzeiten
+- Klick auf die Uhr mit der vorgegebenen Zeit
+- Sofortiges Feedback („Richtig!“/„Falsch, versuche es nochmal“)
+- utomatischer Start der nächsten Runde
+- Vollständig responsives Design, ideal für Smartphones und Tablets 
+
+👉 [Spiele TimeLord v2](https://daddiotime-kidsskills.netlify.app/timelord-v2/index.html)
+
+---
+
 ## 🧠 SimonMemoryGame
 
 Ein klassisches Reaktions- und Gedächtnisspiel mit Licht- und Tonfolgen.
