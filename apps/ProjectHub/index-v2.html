@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Hub</title>
+
+  <!-- Roboto & Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+  <!-- Material Web Components -->
+  <script type="module" src="https://unpkg.com/@material/mwc-top-app-bar@latest?module"></script>
+  <script type="module" src="https://unpkg.com/@material/mwc-button@latest?module"></script>
+
+  <style>
+    :root {
+      /* Sanfte Pastell-Palette gemäß Material 3 */
+      --md-sys-color-primary: #8E73C3;
+      --md-sys-color-on-primary: #FFFFFF;
+      --md-sys-color-primary-container: #EAE4FF;
+      --md-sys-color-on-primary-container: #2E125B;
+
+      --md-sys-color-secondary: #7E7788;
+      --md-sys-color-on-secondary: #FFFFFF;
+      --md-sys-color-secondary-container: #E6E1F5;
+      --md-sys-color-on-secondary-container: #1F1A26;
+
+      --md-sys-color-surface: #FFFBFE;
+      --md-sys-color-on-surface: #1C1B1F;
+      --md-sys-color-on-surface-variant: #49454F;
+
+      --md-sys-shape-corner-extra-large: 20px;
+      --md-sys-shape-corner-medium: 12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--md-sys-color-surface);
+      color: var(--md-sys-color-on-surface);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    mwc-top-app-bar {
+      --mdc-theme-primary: var(--md-sys-color-primary);
+      --mdc-theme-on-primary: var(--md-sys-color-on-primary);
+    }
+
+    main {
+      flex: 1;
+      padding: 24px;
+    }
+
+    .description {
+      margin-bottom: 32px;
+      font-size: 0.875rem;
+      color: var(--md-sys-color-on-surface-variant);
+      line-height: 1.6;
+    }
+
+    section {
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--md-sys-color-secondary);
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    a.link {
+      text-decoration: none;
+    }
+
+    mwc-button {
+      border-radius: var(--md-sys-shape-corner-medium) !important;
+      --mdc-typography-button-font-size: 1rem;
+      padding: 16px 24px;
+    }
+
+    mwc-button[raised] {
+      --mdc-theme-primary: var(--md-sys-color-primary);
+      --mdc-theme-on-primary: var(--md-sys-color-on-primary);
+      --mdc-theme-surface: var(--md-sys-color-primary-container);
+      --mdc-theme-on-surface: var(--md-sys-color-on-primary-container);
+      transition: box-shadow 0.2s;
+    }
+
+    mwc-button[raised]:hover {
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    }
+
+    mwc-button[raised]:active {
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <mwc-top-app-bar dense>
+    <span slot="title">KidsSkills – Lernspiele</span>
+  </mwc-top-app-bar>
+
+  <main>
+    <p class="description">
+      Entdecke interaktive Lernspiele für Grundfertigkeiten: Kopfrechnen, Uhrzeit erkennen, Gedächtnis trainieren und mehr – gestaltet mit sanften Farben und intuitiver Bedienung.
+    </p>
+
+    <section>
+      <h2>MentalMath</h2>
+      <div class="buttons">
+        <a class="link" href="https://daddiotime-kidsskills.netlify.app/MentalMath/index.html">
+          <mwc-button raised label="Kopfrechnen"></mwc-button>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>SimonMemoryGame</h2>
+      <div class="buttons">
+        <a class="link" href="https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-ai/index.html">
+          <mwc-button raised label="Simon AI"></mwc-button>
+        </a>
+        <a class="link" href="https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-classic/index.html">
+          <mwc-button raised label="Simon Classic"></mwc-button>
+        </a>
+        <a class="link" href="https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-retro/index.html">
+          <mwc-button raised label="Simon Retro"></mwc-button>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>TimeLord</h2>
+      <div class="buttons">
+        <a class="link" href="https://daddiotime-kidsskills.netlify.app/timelord/index.html">
+          <mwc-button raised label="Uhrzeit lernen"></mwc-button>
+        </a>
+        <a class="link" href="https://daddiotime-kidsskills.netlify.app/timelord-v2/index.html">
+          <mwc-button raised label="Uhrzeit v2 lernen"></mwc-button>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>LetterTracing</h2>
+      <div class="buttons">
+        <a class="link" href="https://daddiotime-kidsskills.netlify.app/lettertracing/index.html">
+          <mwc-button raised label="Buchstaben nachzeichnen"></mwc-button>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Rewards</h2>
+      <div class="buttons">
+        <a class="link" href="https://daddiotime-kidsskills.netlify.app/rewards/index.html">
+          <mwc-button raised label="Punkte & Fortschritt"></mwc-button>
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
