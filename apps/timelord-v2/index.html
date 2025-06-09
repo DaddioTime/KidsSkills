@@ -11,22 +11,28 @@
     .clock-container { flex: 0 1 30vmin; display: flex; justify-content: center; align-items: center; }
     canvas { background: #fff; border: 2px solid #89c; border-radius: 50%; cursor: pointer; width: 100%; aspect-ratio: 1; }
     #message { margin-top: 15px; font-size: 5vmin; font-weight: bold; }
+    #scoreboard { margin-top: 10px; font-size: 4vmin; }
   </style>
 </head>
 <body>
   <h1 id="prompt">Klicke die Uhr, die <span id="targetTime"></span> Uhr an!</h1>
   <div id="clocks"></div>
   <div id="message"></div>
+  <div id="scoreboard">Runde: <span id="round">0</span> | Punkte: <span id="score">0</span></div>
 
   <script>
     const CLOCK_COUNT = 4;
     const clocksDiv = document.getElementById('clocks');
     const targetSpan = document.getElementById('targetTime');
     const messageDiv = document.getElementById('message');
+    const roundSpan = document.getElementById('round');
+    const scoreSpan = document.getElementById('score');
 
     // Aktueller Spielzustand
     let currentOptions = [];
     let currentTarget = null;
+    let roundCount = 0;
+    let scoreCount = 0;
 
     function drawClock(canvas, hours, minutes) {
       const size = Math.min(canvas.parentElement.clientWidth, 300);
@@ -73,7 +79,13 @@
 
     function formatTime({ h, m }) { return `${h}:${m.toString().padStart(2, '0')}`; }
 
+    function updateScoreboard() {
+      roundSpan.textContent = roundCount;
+      scoreSpan.textContent = scoreCount;
+    }
+
     function setupRound() {
+      roundCount++;
       clocksDiv.innerHTML = '';
       messageDiv.textContent = '';
       currentTarget = pickRandomTime();
@@ -93,11 +105,15 @@
         clocksDiv.append(container);
         drawClock(canvas, opt.h, opt.m);
       });
+      updateScoreboard();
     }
 
     function onClockClick(opt) {
       if (opt.h === currentTarget.h && opt.m === currentTarget.m) {
-        messageDiv.textContent = 'Richtig!'; setTimeout(setupRound, 1000);
+        scoreCount++;
+        messageDiv.textContent = 'Richtig!';
+        updateScoreboard();
+        setTimeout(setupRound, 1000);
       } else {
         messageDiv.textContent = 'Falsch, versuche es nochmal.';
       }
@@ -108,7 +124,10 @@
     window.addEventListener('resize', () => {
       document.querySelectorAll('canvas').forEach(c => drawClock(c, +c.dataset.h, +c.dataset.m));
     });
-    document.addEventListener('DOMContentLoaded', setupRound);
+    document.addEventListener('DOMContentLoaded', () => {
+      updateScoreboard();
+      setupRound();
+    });
   </script>
 </body>
 </html>
