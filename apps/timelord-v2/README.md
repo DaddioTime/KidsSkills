@@ -8,13 +8,15 @@ Ein interaktives Spiel, bei dem Kinder (und Erwachsene) auf analogen Zifferblät
 
 ## Features
 
-- **Viertelstunden-Zeiten**: Vier zufällig gewählte Zeiten im Viertelstunden-Raster  
-- **Vier Auswahlmöglichkeiten**: Klicke die richtige Uhr aus vier Optionen  
-- **Sofortiges Feedback**: „Richtig!“ oder „Falsch, versuche es nochmal.“  
-- **Automatischer Rundenwechsel**: Nach einem richtigen Klick startet die nächste Aufgabe automatisch
+- **Schwierigkeitsgrade**: Viertelstunden oder zufällige Minuten
+- **Adaptive Herausforderung**: Mehr Uhren bei langer Erfolgsserie
+- **Mehrsprachig**: Deutsch und Englisch auswählbar
+- **Sofortiges Feedback** inklusive optionalem Ton
+- **Automatischer Rundenwechsel** und Highscore-Speicherung
 - **Farbige Zeiger**: Stundenzeiger in **Rot**, Minutenzeiger in **Blau**
-- **Responsives Design**: Optimiert für Desktop, Tablets und Smartphones
-- **Punkteanzeige**: Zeigt Runde und Punktestand während des Spiels
+- **Responsives Design** und Kontrastmodus
+- **Offline nutzbar** dank Service Worker
+- **Fehleranalyse** zeigt häufig verwechselte Zeiten an
 
 ---
 
