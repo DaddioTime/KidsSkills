@@ -9,6 +9,8 @@ const LANG_SELECT = document.getElementById('langSelect');
 const DIFFICULTY_SELECT = document.getElementById('difficultySelect');
 const CONTRAST_BTN = document.getElementById('contrastBtn');
 const AUDIO_ENABLED = document.getElementById('soundToggle');
+const SETTINGS_BTN = document.getElementById('settingsBtn');
+const SETTINGS_BOX = document.getElementById('settingsBox');
 
 let currentOptions = [];
 let currentTarget = null;
@@ -205,6 +207,10 @@ LANG_SELECT.addEventListener('change', () => {
 
 CONTRAST_BTN.addEventListener('click', () => {
   document.body.classList.toggle('high-contrast');
+});
+
+SETTINGS_BTN.addEventListener('click', () => {
+  SETTINGS_BOX.classList.toggle('show');
 });
 
 if ('serviceWorker' in navigator) {
