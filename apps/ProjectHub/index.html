@@ -1,86 +1,152 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Hub</title>
-    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <link rel="manifest" href="/images/site.webmanifest">
-    <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/images/android-chrome-512x512.png">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            background-color: #f0f0f0;
-        }
-        .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            text-align: center;
-            width: 100%;
-            max-width: 800px;
-        }
-        .nav-button {
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 8px 0;
-            font-size: 18px;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.3s ease;
-        }
-        .nav-button:hover {
-            background: #0056b3;
-        }
-        .nav-button:active {
-            background: #004494;
-        }
-        h1, h2 {
-            margin-bottom: 20px;
-        }
-        hr {
-            margin: 20px 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Hub</title>
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+    :root {
+      --md-sys-color-primary: #6750A4;
+      --md-sys-color-on-primary: #FFFFFF;
+      --md-sys-color-primary-container: #EADDFF;
+      --md-sys-color-on-primary-container: #21005D;
+      --md-sys-color-secondary: #625B71;
+      --md-sys-color-on-secondary: #FFFFFF;
+      --md-sys-color-secondary-container: #E8DEF8;
+      --md-sys-color-on-secondary-container: #1D192B;
+      --md-sys-color-surface: #FFFBFE;
+      --md-sys-color-on-surface: #1C1B1F;
+      --md-sys-color-on-surface-variant: #49454F;
+      --md-sys-shape-corner-extra-large: 28px;
+      --md-sys-shape-corner-medium: 12px;
+      --md-sys-typescale-headline1: 2.25rem;
+      --md-sys-typescale-headline2: 1.5rem;
+      --md-sys-typescale-body1: 1rem;
+      --md-sys-typescale-body2: 0.875rem;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--md-sys-color-surface);
+      color: var(--md-sys-color-on-surface);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      padding: 20px 24px;
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      font-size: var(--md-sys-typescale-headline1);
+      font-weight: 500;
+      border-bottom-left-radius: var(--md-sys-shape-corner-extra-large);
+      border-bottom-right-radius: var(--md-sys-shape-corner-extra-large);
+    }
+    main {
+      flex: 1;
+      padding: 32px 24px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    section { margin-bottom: 40px; }
+    h2 {
+      margin: 0 0 16px;
+      font-size: var(--md-sys-typescale-headline2);
+      font-weight: 500;
+      color: var(--md-sys-color-secondary);
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .button {
+      padding: 14px 28px;
+      font-size: var(--md-sys-typescale-body1);
+      font-weight: 500;
+      border: none;
+      border-radius: var(--md-sys-shape-corner-medium);
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .button.secondary {
+      background: var(--md-sys-color-secondary-container);
+      color: var(--md-sys-color-on-secondary-container);
+    }
+    .button:hover {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+    }
+    .button.secondary:hover {
+      background: var(--md-sys-color-secondary);
+      color: var(--md-sys-color-on-secondary);
+    }
+    .button:active { transform: scale(0.97); }
+    a.button-link { text-decoration: none; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>KidsSkills – Lernspiele</h1>
-        <hr>
-
-        <h2>MentalMath</h2>
-        <button class="nav-button" onclick="window.location.href='https://daddiotime-kidsskills.netlify.app/MentalMath/index.html'">Kopfrechnen</button>
-
-        <h2>SimonMemoryGame</h2>
-        <button class="nav-button" onclick="window.location.href='https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-ai/index.html'">Simon AI</button>
-        <button class="nav-button" onclick="window.location.href='https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-classic/index.html'">Simon Classic</button>
-        <button class="nav-button" onclick="window.location.href='https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-retro/index.html'">Simon Retro</button>
-
-        <h2>TimeLord</h2>
-        <button class="nav-button" onclick="window.location.href='https://daddiotime-kidsskills.netlify.app/TimeLord/index.html'">Uhrzeit lernen</button>
-        <button class="nav-button" onclick="window.location.href='https://daddiotime-kidsskills.netlify.app/TimeLord-v2/index.html'">Uhrzeit v2 lernen</button>
-
-
-        <h2>LetterTracing</h2>
-        <button class="nav-button" onclick="window.location.href='https://daddiotime-kidsskills.netlify.app/lettertracing/index.html'">Buchstaben nachzeichnen</button>
-
-        <h2>Rewards</h2>
-        <button class="nav-button" onclick="window.location.href='https://daddiotime-kidsskills.netlify.app/rewards/index.html'">Punkte & Fortschritt</button>
-    </div>
+  <header>KidsSkills – Lernspiele</header>
+  <main>
+    <section>
+      <h2>MentalMath</h2>
+      <div class="buttons">
+        <a href="https://daddiotime-kidsskills.netlify.app/MentalMath/index.html" class="button-link">
+          <button class="button">Kopfrechnen 🧮</button>
+        </a>
+      </div>
+    </section>
+    <section>
+      <h2>SimonMemoryGame</h2>
+      <div class="buttons">
+        <a href="https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-ai/index.html" class="button-link">
+          <button class="button secondary">Simon AI 🤖</button>
+        </a>
+        <a href="https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-classic/index.html" class="button-link">
+          <button class="button secondary">Simon Classic 🎮</button>
+        </a>
+        <a href="https://daddiotime-kidsskills.netlify.app/SimonMemoryGame/version-retro/index.html" class="button-link">
+          <button class="button secondary">Simon Retro 🕹️</button>
+        </a>
+      </div>
+    </section>
+    <section>
+      <h2>TimeLord</h2>
+      <div class="buttons">
+        <a href="https://daddiotime-kidsskills.netlify.app/timelord/index.html" class="button-link">
+          <button class="button secondary">Uhrzeit lernen ⏰</button>
+        </a>
+        <a href="https://daddiotime-kidsskills.netlify.app/timelord-v2/index.html" class="button-link">
+          <button class="button secondary">Uhrzeit v2 lernen 🕒</button>
+        </a>
+      </div>
+    </section>
+    <section>
+      <h2>LetterTracing</h2>
+      <div class="buttons">
+        <a href="https://daddiotime-kidsskills.netlify.app/lettertracing/index.html" class="button-link">
+          <button class="button secondary">Buchstaben nachzeichnen ✏️</button>
+        </a>
+      </div>
+    </section>
+    <section>
+      <h2>Rewards</h2>
+      <div class="buttons">
+        <a href="https://daddiotime-kidsskills.netlify.app/rewards/index.html" class="button-link">
+          <button class="button secondary">Punkte & Fortschritt 🏆</button>
+        </a>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
