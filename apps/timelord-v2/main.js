@@ -17,7 +17,6 @@ let currentTarget = null;
 let roundCount = 0;
 let scoreCount = 0;
 let highScore = +localStorage.getItem('tl2Highscore') || 0;
-let streak = 0;
 const errorStats = {};
 
 const translations = {
@@ -140,7 +139,7 @@ function setupRound() {
   currentTarget = pickRandomTime(difficulty);
   TARGET_SPAN.textContent = formatTime(currentTarget);
   currentOptions = [currentTarget];
-  const optionCount = 4 + Math.min(2, Math.floor(streak / 3));
+  const optionCount = 4; // Feste Anzahl Uhren, dynamisches Erhöhen entfernt
   while (currentOptions.length < optionCount) {
     const t = pickRandomTime(difficulty);
     if (!currentOptions.some(o => o.h === t.h && o.m === t.m)) currentOptions.push(t);
@@ -164,18 +163,16 @@ function setupRound() {
 function onClockClick(opt) {
   if (opt.h === currentTarget.h && opt.m === currentTarget.m) {
     scoreCount++;
-    streak++;
     playSound(true);
-    MESSAGE_DIV.textContent = t('correct');
+    MESSAGE_DIV.textContent = t('correct') + ' ✅';
     if (scoreCount > highScore) {
       highScore = scoreCount;
       localStorage.setItem('tl2Highscore', highScore);
     }
     setTimeout(setupRound, 1000);
   } else {
-    streak = 0;
     playSound(false);
-    MESSAGE_DIV.textContent = t('wrong');
+    MESSAGE_DIV.textContent = t('wrong') + ' ❌';
     const key = formatTime(currentTarget);
     errorStats[key] = (errorStats[key] || 0) + 1;
   }
@@ -194,7 +191,7 @@ function showMostErrors() {
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+    [arr[i], arr[j]] = [arr[i], arr[i]];
   }
 }
 
